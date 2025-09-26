@@ -1,20 +1,17 @@
 import { Component, createSignal, onMount } from "solid-js";
-// Se importi il logo in /src/assets, rinomina il path qui sotto.
-// In alternativa mettilo in /public e usa "/barwise-logo.png".
+// Metti il logo in /src/assets con questo nome, oppure sposta in /public e usa "/barwise-logo.png"
 import logoUrl from "../assets/Barwise_lite_512.png";
 
 /**
- * Landing page pubblicitaria "one page" per BarWise
+ * Landing page "one-page" per BarWise — aggiornata sui contenuti reali
  * - SolidJS + TailwindCSS
- * - Sezioni verticali, header sticky, CTA evidenti
+ * - Sezioni verticali, header sticky, CTA
  * - Palette: #66cc8a, bianco, nero
- * - Testi d'effetto e lista completa di moduli/feature (puoi togliere/aggiungere in seguito)
+ * - Copy semplificato e allettante, fedele alle feature elencate
  */
 const BarwiseLanding: Component = () => {
-  // Stato per aprire/chiudere il menu mobile
   const [menuOpen, setMenuOpen] = createSignal(false);
 
-  // Scroll dolce agli anchor (evita rimbalzi su iOS/Chrome)
   const smoothScroll = (e: Event) => {
     const target = e.currentTarget as HTMLAnchorElement;
     const href = target.getAttribute("href");
@@ -25,12 +22,10 @@ const BarwiseLanding: Component = () => {
     setMenuOpen(false);
   };
 
-  // Riduci header su scroll (piccola finezza)
   onMount(() => {
     const header = document.getElementById("bw-header");
     const onScroll = () => {
       if (!header) return;
-      header.classList.toggle("backdrop-blur-md/0", window.scrollY < 10);
       header.classList.toggle("shadow-lg", window.scrollY > 10);
     };
     window.addEventListener("scroll", onScroll);
@@ -39,7 +34,7 @@ const BarwiseLanding: Component = () => {
 
   return (
     <div class="bg-black text-white selection:bg-[#66cc8a] selection:text-black">
-      {/* Header sticky */}
+      {/* Header */}
       <header
         id="bw-header"
         class="sticky top-0 z-40 w-full border-b border-white/10 bg-black/70 backdrop-blur-md transition-shadow"
@@ -76,7 +71,7 @@ const BarwiseLanding: Component = () => {
             ))}
           </nav>
 
-          {/* CTA + Mobile menu button */}
+          {/* CTA + Mobile menu */}
           <div class="flex items-center gap-3">
             <a
               href="#cta"
@@ -134,16 +129,9 @@ const BarwiseLanding: Component = () => {
         </div>
       </header>
 
-      {/* Hero */}
-      <section
-        id="hero"
-        class="relative isolate overflow-hidden"
-      >
-        {/* Sfondo con gradiente circolare */}
-        <div
-          aria-hidden="true"
-          class="pointer-events-none absolute inset-0 -z-10"
-        >
+      {/* Hero aggiornato */}
+      <section id="hero" class="relative isolate overflow-hidden">
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
           <div class="absolute left-1/2 top-[-15%] h-[60vh] w-[60vh] -translate-x-1/2 rounded-full bg-[#66cc8a]/20 blur-[120px]" />
           <div class="absolute right-[-10%] bottom-[-10%] h-[40vh] w-[40vh] rounded-full bg-[#66cc8a]/10 blur-[120px]" />
         </div>
@@ -151,16 +139,18 @@ const BarwiseLanding: Component = () => {
         <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-5 pb-20 pt-16 md:grid-cols-2 md:pb-28 md:pt-24">
           <div class="space-y-6">
             <p class="inline-block rounded-full border border-[#66cc8a]/30 bg-[#66cc8a]/10 px-3 py-1 text-xs font-semibold tracking-wide text-[#66cc8a]">
-              Gestionale per ristorazione
+              Comande & stampe termiche — anche offline
             </p>
             <h1 class="text-4xl font-extrabold leading-tight md:text-6xl">
-              Meno gestione, più servizio.
+              Più servizio, meno frizione.
               <br />
               <span class="text-[#66cc8a]">Ci pensa BarWise.</span>
             </h1>
             <p class="max-w-prose text-lg opacity-80">
-              Tavoli, ordini, stampe, pagamenti, magazzino, analisi. Tutto in
-              un’unica interfaccia veloce e bella da usare.
+              Il gestionale locale per ristoranti e bar: presa comande veloce,
+              stampe di reparto, multi-stampante e multi-cassa fiscale, tutto
+              sincronizzato sul tuo <span class="font-semibold">database Triplit</span>.
+              Se salta internet, tu no.
             </p>
             <div class="flex flex-col gap-3 sm:flex-row">
               <a
@@ -171,23 +161,23 @@ const BarwiseLanding: Component = () => {
                 Inizia gratis
               </a>
               <a
-                href="#how"
+                href="#features"
                 onClick={smoothScroll}
                 class="rounded-xl border border-white/15 px-6 py-3 text-center font-semibold hover:bg-white/5"
               >
-                Guarda come funziona
+                Vedi le funzioni
               </a>
             </div>
-            <div class="flex items-center gap-4 pt-2 text-sm opacity-70">
-              <span>Multi-dispositivo</span>
+            <div class="flex flex-wrap items-center gap-4 pt-2 text-sm opacity-70">
+              <span>Locale su Triplit</span>
               <span class="h-1 w-1 rounded-full bg-white/40" />
-              <span>Stampe di reparto</span>
+              <span>Multi-stampante & multi-cassa</span>
               <span class="h-1 w-1 rounded-full bg-white/40" />
-              <span>Scontrini e pre-conti</span>
+              <span>Preconto e post-stampe</span>
             </div>
           </div>
 
-          {/* Card vetrina */}
+          {/* Mockup vetrina */}
           <div class="relative">
             <div class="rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[0.03] p-4 shadow-2xl">
               <div class="rounded-2xl bg-black p-5 ring-1 ring-white/10">
@@ -197,10 +187,9 @@ const BarwiseLanding: Component = () => {
                     <div class="font-semibold">
                       <span class="text-[#66cc8a]">Bar</span>Wise
                     </div>
-                    <div class="text-xs opacity-70">Il tuo locale, in ordine.</div>
+                    <div class="text-xs opacity-70">Comande senza pensieri.</div>
                   </div>
                 </div>
-                {/* "Schermata" mockup semplice */}
                 <div class="grid gap-3">
                   <div class="h-28 rounded-xl border border-white/10 bg-white/5" />
                   <div class="grid grid-cols-3 gap-3">
@@ -216,43 +205,73 @@ const BarwiseLanding: Component = () => {
         </div>
       </section>
 
-      {/* Funzioni chiave */}
+      {/* Funzioni chiave: riscritte */}
       <section id="features" class="mx-auto max-w-7xl px-5 py-16 md:py-24">
         <h2 class="mb-10 text-3xl font-extrabold md:text-4xl">
-          Tutto quello che serve. <span class="text-[#66cc8a]">Davvero.</span>
+          Pensato per il lavoro vero. <span class="text-[#66cc8a]">Sul campo.</span>
         </h2>
 
         <div class="grid gap-6 md:grid-cols-3">
           {[
             {
-              title: "Gestione tavoli",
+              title: "Locale & Offline",
               desc:
-                "Pianta sale e tavoli, stati in tempo reale, spostamenti e unioni in un attimo.",
+                "Lavora su database Triplit in locale: se manca internet, continui a prendere ordini e stampare.",
             },
             {
-              title: "Ordini rapidissimi",
+              title: "Multi-stampante / Multi-cassa",
               desc:
-                "Aggiungi prodotti, varianti e note con pochi tap. Niente rallentamenti.",
+                "Gestisci più stampanti termiche e più casse fiscali in parallelo, senza incastri.",
             },
             {
-              title: "Cicli di stampa",
+              title: "Sale & Tavoli liberi",
               desc:
-                "Smista automaticamente su cucina, pizzeria, bar. Stampa parziale o per reparto.",
+                "Crea sale e tavoli come vuoi. Sposta, unisci, aggiungi un “secondo nome” al tavolo quando serve.",
             },
             {
-              title: "Magazzino & ricette",
+              title: "Preconto & Post-stampe",
               desc:
-                "Carichi, scarichi, scorte minime e distinte base: sai sempre cosa manca.",
+                "Stampa il preconto in un clic. Ritrasmetti ordini per reparto con la post-stampa quando ne hai bisogno.",
             },
             {
-              title: "Pagamenti smart",
+              title: "Messaggistica interna",
               desc:
-                "Contanti, carte, mance, dividi conto. Scontrini e pre-conti in 1 click.",
+                "Invia messaggi tra i client e allega note alle comande: tutti sanno cosa fare, subito.",
             },
             {
-              title: "Statistiche",
+              title: "Pagamenti flessibili",
               desc:
-                "Fatturato, incassi, coperti, top seller, orari caldi. Dati chiari per decisioni migliori.",
+                "Dividi per quote o usa i subtotali. Sposta il conto da un tavolo all’altro in sicurezza.",
+            },
+            {
+              title: "Stock & blocchi",
+              desc:
+                "Imposta lo stock prodotto, ricevi avvisi a esaurimento e blocca la vendita automaticamente.",
+            },
+            {
+              title: "Staff con PIN & permessi",
+              desc:
+                "Ogni persona ha PIN d’accesso e privilegi su misura scelti dall’admin.",
+            },
+            {
+              title: "Backup nativi",
+              desc:
+                "Importa seed di default o crea i tuoi backup: ripristina quando vuoi.",
+            },
+            {
+              title: "Statistiche storiche",
+              desc:
+                "Storico ordini opzionale: vedi volumi, best seller e orari caldi — solo se vuoi tenerli.",
+            },
+            {
+              title: "Ordini senza tavolo",
+              desc:
+                "Gestisci comande senza tavolo (es. al banco) con semplice riferimento cliente.",
+            },
+            {
+              title: "Gestione prodotti rapida",
+              desc:
+                "Crea/modifica/cancella prodotti in pochi passaggi: formati, categorie, varianti e tag inclusi.",
             },
           ].map((f) => (
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
@@ -264,42 +283,39 @@ const BarwiseLanding: Component = () => {
         </div>
       </section>
 
-      {/* Moduli (lista ampia da potare quando vuoi) */}
+      {/* Moduli specifici: tutto ciò che puoi voler usare */}
       <section id="modules" class="bg-white/[0.03]">
         <div class="mx-auto max-w-7xl px-5 py-16 md:py-24">
-          <h2 class="mb-4 text-3xl font-extrabold md:text-4xl">
-            Moduli BarWise
-          </h2>
+          <h2 class="mb-4 text-3xl font-extrabold md:text-4xl">Moduli BarWise</h2>
           <p class="mb-10 max-w-prose opacity-80">
-            Scegli tu cosa usare. A tutto il resto… <span class="text-[#66cc8a] font-semibold">ci pensa BarWise</span>.
+            Attiva solo ciò che ti serve. Al resto…{" "}
+            <span class="text-[#66cc8a] font-semibold">ci pensa BarWise</span>.
           </p>
 
           <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              "POS & Cassa",
-              "Gestione sale/tavoli",
-              "Ordini al tavolo",
-              "Stampe cucina/bar/pizzeria",
-              "Preconto & Scontrino",
-              "Pagamenti (contanti/carte)",
-              "Menu digitale e QR",
-              "Delivery & Asporto",
-              "Prenotazioni",
-              "Gestione clienti",
-              "Magazzino",
-              "Ricette & food-cost",
-              "Varianti & allergeni",
-              "Listini e offerte",
-              "Turni & ruoli staff",
-              "Report & KPI",
-              "Esportazioni contabili",
-              "Multi-punto cassa",
-              "Sincronizzazione cloud",
-              "Offline resiliente",
-              "Integrazioni stampanti",
-              "API & Webhook",
-              "Sicurezza e permessi",
-              "Backup automatici",
+              "Presa comande",
+              "Stampe termiche per reparto",
+              "Preconto",
+              "Post-stampa ordini",
+              "Gestione sale e tavoli",
+              "Secondo nome tavolo",
+              "Ordini senza tavolo",
+              "Pagamenti per quote / subtotale",
+              "Spostamento conto tra tavoli",
+              "Multi-cassa fiscale",
+              "Multi-stampante",
+              "Messaggistica interna & note in comanda",
+              "Gestione prodotti",
+              "Formati con prezzi",
+              "Categorie multiple",
+              "Varianti di prezzo",
+              "Tag prodotto",
+              "Stock & blocco vendite",
+              "Storico ordini & statistiche",
+              "Utenti, PIN e permessi",
+              "Backup: import/export",
+              "Sincronizzazione locale Triplit",
             ].map((m) => (
               <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-black/60 p-4">
                 <svg viewBox="0 0 24 24" class="h-5 w-5">
@@ -329,19 +345,19 @@ const BarwiseLanding: Component = () => {
               step: "1",
               title: "Configura",
               desc:
-                "Aree, tavoli, prodotti, prezzi, stampanti. L’assistente ti guida in pochi minuti.",
+                "Crea sale e tavoli, aggiungi prodotti, imposta stampanti e casse fiscali. Importa un backup se vuoi partire già pronto.",
             },
             {
               step: "2",
-              title: "Serve",
+              title: "Prendi l’ordine",
               desc:
-                "Prendi l’ordine, BarWise smista e stampa dove serve. Più veloci, zero intoppi.",
+                "Comande velocissime con note e messaggi interni. Stampa automatica su reparto, anche offline.",
             },
             {
               step: "3",
-              title: "Incassa",
+              title: "Chiudi & analizza",
               desc:
-                "Chiudi, dividi, stampa. Tutto tracciato, tutto chiaro. Dati pronti per i report.",
+                "Preconto, pagamenti per quote o subtotale, statistiche su storico ordini (opzionali).",
             },
           ].map((s) => (
             <li class="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
@@ -370,22 +386,30 @@ const BarwiseLanding: Component = () => {
               {
                 name: "Start",
                 price: "Gratis",
-                features: ["1 punto cassa", "Stampe di reparto", "Report base"],
+                features: [
+                  "Presa comande",
+                  "Stampe di reparto",
+                  "1 cassa fiscale",
+                ],
               },
               {
                 name: "Pro",
                 price: "€",
                 badge: "Più scelto",
                 features: [
-                  "Fino a 3 punti cassa",
-                  "Magazzino & ricette",
-                  "Report avanzati",
+                  "Multi-stampante",
+                  "Multi-cassa fiscale",
+                  "Stock & Varianti",
                 ],
               },
               {
                 name: "Enterprise",
                 price: "Su misura",
-                features: ["Multi-sede", "API & integrazioni", "Supporto dedicato"],
+                features: [
+                  "Multi-sede",
+                  "Permessi granulari",
+                  "Supporto dedicato",
+                ],
               },
             ].map((p) => (
               <div class="relative rounded-3xl border border-white/10 bg-black/60 p-6">
@@ -417,26 +441,34 @@ const BarwiseLanding: Component = () => {
         </div>
       </section>
 
-      {/* FAQ sintetiche */}
+      {/* FAQ mirate */}
       <section id="faq" class="mx-auto max-w-7xl px-5 py-16 md:py-24">
         <h2 class="mb-8 text-3xl font-extrabold md:text-4xl">FAQ</h2>
         <div class="grid gap-4 md:grid-cols-2">
           {[
             [
-              "Serve hardware dedicato?",
-              "No. Funziona su tablet, PC, Mac. Per le stampe supportiamo le classiche stampanti di reparto.",
+              "Funziona senza internet?",
+              "Sì. BarWise lavora in locale su Triplit: se la rete cade, continui a prendere comande e stampare.",
             ],
             [
-              "Posso migrare i dati?",
-              "Sì, import di prodotti e listini da CSV. Backup automatici.",
+              "Posso usare più stampanti o più casse fiscali?",
+              "Sì, è pensato per multi-stampante e multi-cassa, anche in contemporanea.",
             ],
             [
-              "Funziona offline?",
-              "Sì, continua a lavorare e sincronizza quando la rete torna disponibile.",
+              "Gestite stock e blocco prodotti?",
+              "Sì: imposti le scorte, ricevi avvisi e puoi bloccare la vendita quando finiscono.",
             ],
             [
-              "È conforme a privacy e sicurezza?",
-              "Ruoli e permessi, crittografia in transito, controlli di accesso.",
+              "Come gestisco il personale?",
+              "Ogni membro dello staff ha un PIN e permessi configurabili dall’admin.",
+            ],
+            [
+              "Posso spostare un conto su un altro tavolo o fare scontrini parziali?",
+              "Certo: spostamento conto tra tavoli, pagamento per quote o subtotale e preconto integrato.",
+            ],
+            [
+              "Posso fare ordini senza tavolo?",
+              "Sì, puoi associare solo un riferimento cliente (es. nome) e stampare comunque.",
             ],
           ].map(([q, a]) => (
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
@@ -456,7 +488,8 @@ const BarwiseLanding: Component = () => {
                 Pronto a servire meglio?
               </h2>
               <p class="mt-2 max-w-prose opacity-80">
-                Attiva BarWise in pochi minuti. Niente carte di credito per iniziare.
+                Attiva BarWise in pochi minuti. Backup, permessi e stampanti:
+                tutto già previsto.
               </p>
             </div>
             <div class="flex gap-3">
@@ -468,11 +501,11 @@ const BarwiseLanding: Component = () => {
                 Inizia gratis
               </a>
               <a
-                href="#how"
+                href="#features"
                 onClick={smoothScroll}
                 class="rounded-xl border border-black/20 px-6 py-3 font-semibold hover:bg-black/5"
               >
-                Scopri di più
+                Scopri le funzioni
               </a>
             </div>
           </div>
