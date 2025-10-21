@@ -1,5 +1,6 @@
 import { Component, createSignal, onMount } from "solid-js";
 import logoUrl from "../assets/Barwise_lite_512_noBorder_3.jpg";
+import { isInviteCode } from "../inviteCodes";
 
 /**
  * Schermata di ingresso con codice d'invito (default: 1111)
@@ -8,18 +9,19 @@ import logoUrl from "../assets/Barwise_lite_512_noBorder_3.jpg";
  * - Accetta anche ?code=1111 da URL
  */
 const InviteGate: Component<{ onSuccess: () => void; expectedCode?: string }> = (props) => {
-	const expected = props.expectedCode ?? "1111";
+	//const expected = props.expectedCode ?? "1111";
 	const [code, setCode] = createSignal("");
 	const [error, setError] = createSignal<string | null>(null);
 	const [show, setShow] = createSignal(false);
 	const [loading, setLoading] = createSignal(false);
 
 	onMount(() => {
-		// Sblocco via URL param ?code=XXXX (utile per QR)
+		// Sblocco via URL param ?code=XXXXXX (utile per QR)
 		const p = new URLSearchParams(window.location.search);
 		const urlCode = p.get("code");
-		if (urlCode && urlCode === expected) {
+		if (urlCode && isInviteCode(urlCode)) {
 			localStorage.setItem("bw_invited", "true");
+			localStorage.setItem("bw_invited_code", urlCode.toUpperCase());
 			props.onSuccess();
 			return;
 		}
@@ -30,14 +32,15 @@ const InviteGate: Component<{ onSuccess: () => void; expectedCode?: string }> = 
 		setError(null);
 		setLoading(true);
 
-		// normalizza: tieni solo cifre, niente spazi
-		const trimmed = code().replace(/\D/g, "");
+		// normalizza: tiene solo lettere/numeri e converte in maiuscolo
+		const normalized = code().replace(/[^a-zA-Z0-9]/g, "");
 
-		if (trimmed === expected) {
-			console.log("Codice corretto, salvo e richiamo onSuccess");
+		if (isInviteCode(normalized)) {
+			console.log("Codice corretto:", normalized);
 			localStorage.setItem("bw_invited", "true");
+			localStorage.setItem("bw_invited_code", normalized);
 			setLoading(false);
-			props.onSuccess(); // <--- qui
+			props.onSuccess();
 			return;
 		}
 
@@ -86,13 +89,13 @@ const InviteGate: Component<{ onSuccess: () => void; expectedCode?: string }> = 
 						<div class="flex items-stretch overflow-hidden rounded-xl border border-white/10 bg-black focus-within:ring-2 focus-within:ring-[#66cc8a]">
 							<input
 								id="invite"
-								inputMode="numeric"
-								autocomplete="one-time-code"
+								inputMode="text"
+								autocomplete="off"
 								class="w-full bg-transparent px-4 py-3 outline-none placeholder:opacity-50"
-								placeholder="Es. 1111"
+								placeholder="Es. Cu9Tpe"
 								type={show() ? "text" : "password"}
 								value={code()}
-								onInput={(e) => setCode(e.currentTarget.value)}
+								onInput={(e) => setCode(e.currentTarget.value)}   // <-- niente toUpperCase()
 								aria-invalid={!!error()}
 								aria-describedby={error() ? "invite-error" : undefined}
 							/>
