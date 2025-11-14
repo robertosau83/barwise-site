@@ -76,6 +76,7 @@ const BarwiseLanding: Component = () => {
 
 	const logout = () => {
 		localStorage.removeItem("bw_invited");
+		localStorage.removeItem("bw_invited_code");
 		window.location.reload(); // torna alla pagina di accesso
 	};
 
