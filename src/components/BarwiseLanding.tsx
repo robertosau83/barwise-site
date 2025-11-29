@@ -422,6 +422,11 @@ const BarwiseLanding: Component = () => {
 							desc:
 								"Crea, modifica, cancella o nascondi prodotti in pochi passaggi.",
 						},
+						{
+							title: "Sicurezza di livello enterprise",
+							desc:
+								"I tuoi dati sono protetti con cifratura AES-256, autenticazione sicura (JWT) e politiche di Row-Level Security. Solo tu puoi accedere alle tue informazioni.",
+						},
 					].map((f) => (
 						<div class="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
 							<div class="flex gap-3">
